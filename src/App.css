@@ -1,0 +1,10 @@
+/* App-specific custom styles */
+.app-title-glow {
+  text-shadow: 0 0 12px rgba(197, 168, 128, 0.4);
+}
+.glow-completed {
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.1);
+}
+.glow-locked {
+  opacity: 0.6;
+}
