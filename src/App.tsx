@@ -108,6 +108,57 @@ function App() {
     saveActiveId(charToImport.id);
   };
 
+  // Enforce logical side-effects on character flags to ensure consistency
+  const applyProgressionSideEffects = (flags: Record<string, string>): Record<string, string> => {
+    const updated = { ...flags };
+
+    // 1. Disease Grummus Access side-effect
+    const fuirstelVal = parseInt(updated.fuirstel || '0', 10);
+    if (fuirstelVal >= 2) {
+      updated.grummus = '1';
+    } else if (fuirstelVal > 0 && fuirstelVal < 2) {
+      updated.grummus = '0';
+    }
+
+    // 2. Mithaniel Marr double-flag side-effect (Cipher half and Book half are obtained together)
+    // mmarr: parent of mmarr_kill, mmarr_book: parent of mmarr_book_flag
+    if (updated.mmarr === '1' && updated.mmarr_book !== '1') {
+      updated.mmarr_book = '1';
+    } else if (updated.mmarr === '0' && updated.mmarr_book === '1') {
+      updated.mmarr_book = '0';
+    } else if (updated.mmarr_book === '1' && updated.mmarr !== '1') {
+      updated.mmarr = '1';
+    } else if (updated.mmarr_book === '0' && updated.mmarr === '1') {
+      updated.mmarr = '0';
+    }
+
+    // 3. Bertoxxulous kill implies Carprin floor access
+    if (fuirstelVal >= 4) {
+      updated.bertox_key_access = '1';
+    }
+
+    // 4. Behemoth slain implies factory door opened
+    const zeksVal = parseInt(updated.zeks || '0', 10);
+    if (zeksVal >= 2) {
+      updated.poi_door = '1';
+    }
+
+    // 5. Solusek Ro slain implies all minis are done
+    const pofireVal = parseInt(updated.pofire || '0', 10);
+    if (pofireVal >= 2) {
+      updated.sol_room = '11111';
+    }
+
+    // 6. Time attuned implies elemental access is unlocked
+    if (updated.time === '1') {
+      if (parseInt(updated.zebuxoruk || '0', 10) < 2) {
+        updated.zebuxoruk = '2';
+      }
+    }
+
+    return updated;
+  };
+
   // Flag checklist checkbox toggle handler
   const handleFlagToggle = (flag: FlagDefinition, isChecked: boolean) => {
     if (!activeCharacter) return;
@@ -136,14 +187,17 @@ function App() {
       newVal = isChecked ? (flag.stepValue !== undefined ? String(flag.stepValue) : '1') : '0';
     }
 
+    const currentFlags = {
+      ...activeCharacter.flags,
+      [parentId]: newVal
+    };
+    const finalFlags = applyProgressionSideEffects(currentFlags);
+
     const updatedCharacters = characters.map(c => {
       if (c.id === activeCharacter.id) {
         return {
           ...c,
-          flags: {
-            ...c.flags,
-            [parentId]: newVal
-          },
+          flags: finalFlags,
           updatedAt: Date.now()
         };
       }
@@ -157,11 +211,13 @@ function App() {
   const handleUpdateFlags = (updatedFlags: Record<string, string>) => {
     if (!activeCharacter) return;
 
+    const finalFlags = applyProgressionSideEffects(updatedFlags);
+
     const updatedCharacters = characters.map(c => {
       if (c.id === activeCharacter.id) {
         return {
           ...c,
-          flags: updatedFlags,
+          flags: finalFlags,
           updatedAt: Date.now()
         };
       }

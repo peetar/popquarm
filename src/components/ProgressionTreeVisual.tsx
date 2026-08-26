@@ -307,7 +307,7 @@ const nodes: VisualNode[] = [
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Halls_of_Honor',
     pqdiUrl: 'https://www.pqdi.cc/npc/220020',
     flags: [
-      { id: 'mmarr', shortLabel: 'Kill', fullName: 'Defeat Mithaniel Marr & Hail Projection' }
+      { id: 'mmarr_kill', shortLabel: 'Kill', fullName: 'Defeat Mithaniel Marr & Hail Projection' }
     ]
   },
   {
@@ -420,7 +420,7 @@ const nodes: VisualNode[] = [
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Solusek_Ro%27s_Tower',
     pqdiUrl: 'https://www.pqdi.cc/npc/212025',
     flags: [
-      { id: 'pofire_2', shortLabel: 'Kill', fullName: 'Defeat Solusek Ro' }
+      { id: 'solusek_kill', shortLabel: 'Kill', fullName: 'Defeat Solusek Ro' }
     ]
   },
   {
@@ -526,7 +526,7 @@ const nodes: VisualNode[] = [
     x: 540, y: 1740,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Time',
     flags: [
-      { id: 'time', shortLabel: 'Attuned', fullName: 'Plane of Time Portal Attuned' }
+      { id: 'time_portal_active', shortLabel: 'Attuned', fullName: 'Plane of Time Portal Attuned' }
     ]
   }
 ];

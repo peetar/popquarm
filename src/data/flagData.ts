@@ -523,6 +523,17 @@ export const flagCategories: FlagCategory[] = [
     description: 'Requires elemental access (Zebuxoruk = 2). Complete the five wing bosses to challenge Solusek Ro.',
     flags: [
       {
+        id: 'pofire_1',
+        name: 'Solusek: Portal altered (Miak)',
+        description: 'Speak to Miak the Light Bearer in Plane of Tranquility. (Sets pofire = 1). Enables entry into the Tower of Solusek Ro.',
+        type: 'group',
+        zone: 'Plane of Tranquility',
+        npc: 'Miak the Light Bearer',
+        wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Solusek_Ro.27s_Tower',
+        parentFlagId: 'pofire',
+        stepValue: 1
+      },
+      {
         id: 'sol_mini_xuzl',
         name: 'Solusek: Xuzl Defeated (Wing 1)',
         description: 'Defeat Xuzl in Solusek Ro\'s Tower and activate the flame stone behind him.',
