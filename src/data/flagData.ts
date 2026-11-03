@@ -783,7 +783,7 @@ export const flagCategories: FlagCategory[] = [
         type: 'raid',
         zone: 'Plane of Knowledge',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Time_Access',
-        raidGuideZoneId: 'potimea',
+        raidGuideZoneId: 'potimeb',
       },
       {
         id: 'time_portal_active',

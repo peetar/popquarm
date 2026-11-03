@@ -61,6 +61,15 @@ export interface LogParseResult {
   parsedLinesCount: number;
 }
 
+export interface RaidGuidePhase {
+  id: string;
+  name: string;
+  shortLabel: string;
+  subtitle?: string;
+  encounters?: string[];
+  rawMarkdown: string;
+}
+
 export interface RaidGuide {
   id: string;
   filename: string;
@@ -71,6 +80,7 @@ export interface RaidGuide {
   tierNum: number;
   encounters: string[];
   rawMarkdown: string;
+  phases?: RaidGuidePhase[];
 }
 
 export interface NpcRawData {

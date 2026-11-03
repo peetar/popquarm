@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { marked } from 'marked';
-import type { RaidGuide, NpcRawData } from '../types';
+import type { RaidGuide, RaidGuidePhase, NpcRawData } from '../types';
 import raidGuidesRaw from '../data/raidGuidesData.json';
 import { NpcModal } from './NpcModal';
 import { getNpcData } from '../utils/npcData';
@@ -19,6 +19,9 @@ export const RaidGuidesView: React.FC<RaidGuidesViewProps> = ({ initialZoneId })
     }
     return null;
   });
+
+  // Separate popup modal specifically for Plane of Time phases
+  const [activeTimePhase, setActiveTimePhase] = useState<RaidGuidePhase | null>(null);
 
   const [activeNpc, setActiveNpc] = useState<NpcRawData | null>(null);
   const [filterTier, setFilterTier] = useState<string>('all');
@@ -46,17 +49,28 @@ export const RaidGuidesView: React.FC<RaidGuidesViewProps> = ({ initialZoneId })
     }
   };
 
-  // Convert raw markdown with marked and enhance PQDI links
+  // Convert raw markdown with marked and enhance PQDI links for standard guides
   const guideHtml = useMemo(() => {
     if (!selectedGuide) return '';
     try {
-      // Remove YAML frontmatter if present for cleaner markdown presentation
       const cleanMd = selectedGuide.rawMarkdown.replace(/```yaml[\s\S]*?```/, '');
       return marked.parse(cleanMd, { async: false }) as string;
     } catch {
       return selectedGuide.rawMarkdown;
     }
   }, [selectedGuide]);
+
+  // Convert active Plane of Time phase markdown
+  const timePhaseHtml = useMemo(() => {
+    if (!activeTimePhase) return '';
+    try {
+      return marked.parse(activeTimePhase.rawMarkdown, { async: false }) as string;
+    } catch {
+      return activeTimePhase.rawMarkdown;
+    }
+  }, [activeTimePhase]);
+
+  const potimebGuide = raidGuides.find(g => g.id === 'potimeb');
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
@@ -98,6 +112,77 @@ export const RaidGuidesView: React.FC<RaidGuidesViewProps> = ({ initialZoneId })
         </div>
       </div>
 
+      {/* Special Feature Highlight for Plane of Time B Phase Selection if available */}
+      {potimebGuide?.phases && (filterTier === 'all' || filterTier === 'Tier 5') && !searchQuery.trim() && (
+        <div 
+          className="card"
+          style={{
+            border: '1px solid var(--color-gold)',
+            background: 'linear-gradient(180deg, rgba(30, 24, 18, 0.95) 0%, rgba(18, 14, 10, 0.98) 100%)',
+            boxShadow: '0 0 15px var(--color-gold-glow)',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.85rem',
+            padding: '1.25rem'
+          }}
+        >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem' }}>
+            <div>
+              <span className="badge badge-raid" style={{ fontSize: '0.68rem', marginBottom: '0.25rem', display: 'inline-block' }}>
+                Tier 5 Pinnacle Raid
+              </span>
+              <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', color: 'var(--color-gold-bright)', margin: 0 }}>
+                The Plane of Time (Inner Sanctum) — Phase Selector
+              </h3>
+              <p style={{ margin: '0.2rem 0 0', fontSize: '0.78rem', color: 'var(--color-text-muted)' }}>
+                Select an individual phase below to view its complete script mechanics, wave timers, HP breakpoints, and mob stats.
+              </p>
+            </div>
+            <button
+              className="btn btn-group"
+              style={{ fontSize: '0.75rem', padding: '0.3rem 0.75rem' }}
+              onClick={() => setSelectedGuide(potimebGuide)}
+            >
+              📖 View Full Master Guide
+            </button>
+          </div>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+            gap: '0.6rem'
+          }}>
+            {potimebGuide.phases.map(phase => (
+              <button
+                key={phase.id}
+                className="btn"
+                onClick={() => setActiveTimePhase(phase)}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                  padding: '0.55rem 0.75rem',
+                  borderRadius: '5px',
+                  backgroundColor: 'var(--color-bg-deep)',
+                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  textAlign: 'left',
+                  gap: '0.2rem',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                <span style={{ fontSize: '0.82rem', fontWeight: 'bold', color: 'var(--color-gold-bright)' }}>
+                  {phase.shortLabel}
+                </span>
+                <span style={{ fontSize: '0.68rem', color: 'var(--color-text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', width: '100%' }}>
+                  {phase.encounters && phase.encounters.length > 0 ? phase.encounters.slice(0, 2).join(', ') : 'Details & rules'}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Grid of Zone Encounters */}
       <div style={{
         display: 'grid',
@@ -106,6 +191,8 @@ export const RaidGuidesView: React.FC<RaidGuidesViewProps> = ({ initialZoneId })
       }}>
         {filteredGuides.map(guide => {
           const isSelected = selectedGuide?.id === guide.id;
+          const isPoTimeB = guide.id === 'potimeb';
+
           return (
             <div
               key={guide.id}
@@ -123,7 +210,7 @@ export const RaidGuidesView: React.FC<RaidGuidesViewProps> = ({ initialZoneId })
               }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                <span className="badge badge-group" style={{ fontSize: '0.65rem' }}>
+                <span className={`badge ${guide.tier.includes('Tier 5') ? 'badge-raid' : 'badge-group'}`} style={{ fontSize: '0.65rem' }}>
                   {guide.tier}
                 </span>
                 <span style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)', fontFamily: 'monospace' }}>
@@ -137,32 +224,56 @@ export const RaidGuidesView: React.FC<RaidGuidesViewProps> = ({ initialZoneId })
                 </h3>
               </div>
 
-              {/* Encounter bullet tags */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', marginTop: 'auto' }}>
-                <div style={{ fontSize: '0.7rem', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                  Encounters ({guide.encounters.length})
-                </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
-                  {guide.encounters.map((enc, i) => {
-                    const cleanEnc = enc.replace(/^#+/, '').replace(/^(Raid Encounter|Mini-Raid Encounter|Mini Encounter|Event Encounter|Tribunal Trial|Encounter|The Trials|Raid Event)[\s:]+/i, '').trim();
-                    return (
-                      <span
-                        key={i}
-                        style={{
-                          fontSize: '0.7rem',
-                          backgroundColor: 'var(--color-bg-deep)',
-                          padding: '0.2rem 0.5rem',
-                          borderRadius: '4px',
-                          border: '1px solid rgba(255, 255, 255, 0.05)',
-                          color: 'var(--color-text-main)'
+              {/* Specific phase buttons for potimeb card */}
+              {isPoTimeB && guide.phases ? (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', marginTop: 'auto' }}>
+                  <div style={{ fontSize: '0.7rem', color: 'var(--color-gold)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    Click a Phase for Quick Breakdown:
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.35rem' }}>
+                    {guide.phases.map(p => (
+                      <button
+                        key={p.id}
+                        className="btn"
+                        style={{ fontSize: '0.68rem', padding: '0.25rem 0.4rem', justifyContent: 'center' }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setActiveTimePhase(p);
                         }}
                       >
-                        {cleanEnc}
-                      </span>
-                    );
-                  })}
+                        {p.shortLabel}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              ) : (
+                /* Standard Encounter bullet tags */
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', marginTop: 'auto' }}>
+                  <div style={{ fontSize: '0.7rem', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    Encounters ({guide.encounters.length})
+                  </div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
+                    {guide.encounters.map((enc, i) => {
+                      const cleanEnc = enc.replace(/^#+/, '').replace(/^(Raid Encounter|Mini-Raid Encounter|Mini Encounter|Event Encounter|Tribunal Trial|Encounter|The Trials|Raid Event)[\s:]+/i, '').trim();
+                      return (
+                        <span
+                          key={i}
+                          style={{
+                            fontSize: '0.7rem',
+                            backgroundColor: 'var(--color-bg-deep)',
+                            padding: '0.2rem 0.5rem',
+                            borderRadius: '4px',
+                            border: '1px solid rgba(255, 255, 255, 0.05)',
+                            color: 'var(--color-text-main)'
+                          }}
+                        >
+                          {cleanEnc}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
 
               <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '0.25rem' }}>
                 <button
@@ -173,7 +284,7 @@ export const RaidGuidesView: React.FC<RaidGuidesViewProps> = ({ initialZoneId })
                     setSelectedGuide(guide);
                   }}
                 >
-                  View Guide & Mechanics →
+                  View Full Guide & Mechanics →
                 </button>
               </div>
             </div>
@@ -181,7 +292,124 @@ export const RaidGuidesView: React.FC<RaidGuidesViewProps> = ({ initialZoneId })
         })}
       </div>
 
-      {/* Guide Detail Popup Modal */}
+      {/* Dedicated Plane of Time Phase Popup Modal */}
+      {activeTimePhase && (
+        <div
+          className="modal-overlay"
+          onClick={() => setActiveTimePhase(null)}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: 'rgba(0, 0, 0, 0.85)',
+            backdropFilter: 'blur(4px)',
+            zIndex: 950,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '1.5rem'
+          }}
+        >
+          <div
+            className="card"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: '920px',
+              maxWidth: '100%',
+              maxHeight: '90vh',
+              overflowY: 'auto',
+              backgroundColor: 'var(--color-bg-dark)',
+              border: '1px solid var(--color-gold-bright)',
+              boxShadow: '0 12px 35px rgba(0,0,0,0.95), 0 0 25px var(--color-gold-glow)',
+              padding: '1.75rem',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1.25rem'
+            }}
+          >
+            {/* Modal Header */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid rgba(197, 168, 128, 0.25)', paddingBottom: '0.75rem' }}>
+              <div>
+                <span className="badge badge-raid" style={{ fontSize: '0.7rem', marginBottom: '0.35rem', display: 'inline-block' }}>
+                  Plane of Time B
+                </span>
+                <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', color: 'var(--color-gold-bright)', margin: 0 }}>
+                  {activeTimePhase.name}
+                </h2>
+              </div>
+              <button
+                onClick={() => setActiveTimePhase(null)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: 'var(--color-text-muted)',
+                  fontSize: '1.3rem',
+                  cursor: 'pointer',
+                  padding: '0.2rem 0.6rem',
+                  lineHeight: 1
+                }}
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Quick Phase Switcher Bar */}
+            {potimebGuide?.phases && (
+              <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', backgroundColor: 'var(--color-bg-deep)', padding: '0.5rem', borderRadius: '5px' }}>
+                {potimebGuide.phases.map(p => (
+                  <button
+                    key={p.id}
+                    className={`btn ${activeTimePhase.id === p.id ? 'btn-group' : ''}`}
+                    style={{ fontSize: '0.7rem', padding: '0.2rem 0.5rem' }}
+                    onClick={() => setActiveTimePhase(p)}
+                  >
+                    {p.shortLabel}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Phase Content Body */}
+            <div 
+              className="raid-guide-content"
+              style={{
+                lineHeight: '1.6',
+                color: 'var(--color-text-main)',
+                fontSize: '0.88rem'
+              }}
+              onClick={(e) => {
+                const target = (e.target as HTMLElement).closest('a');
+                if (target && target.href && target.href.includes('pqdi.cc/npc/')) {
+                  const match = target.href.match(/pqdi\.cc\/npc\/(\d+)/);
+                  if (match) {
+                    e.preventDefault();
+                    handleOpenNpc(match[1]);
+                  }
+                }
+              }}
+              dangerouslySetInnerHTML={{ __html: timePhaseHtml }}
+            />
+
+            {/* Modal Footer */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '0.75rem' }}>
+              <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
+                Tip: Click any blue mob link to inspect live PQDI combat stats, flurry, rampage, and immunities.
+              </span>
+              <button
+                className="btn btn-group"
+                onClick={() => setActiveTimePhase(null)}
+                style={{ fontSize: '0.8rem', padding: '0.35rem 0.8rem' }}
+              >
+                Close Phase Popup
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Standard Guide Detail Popup Modal */}
       {selectedGuide && (
         <div
           className="modal-overlay"
@@ -221,7 +449,7 @@ export const RaidGuidesView: React.FC<RaidGuidesViewProps> = ({ initialZoneId })
             {/* Modal Header */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid rgba(197, 168, 128, 0.25)', paddingBottom: '0.75rem' }}>
               <div>
-                <span className="badge badge-group" style={{ fontSize: '0.7rem', marginBottom: '0.35rem', display: 'inline-block' }}>
+                <span className={`badge ${selectedGuide.tier.includes('Tier 5') ? 'badge-raid' : 'badge-group'}`} style={{ fontSize: '0.7rem', marginBottom: '0.35rem', display: 'inline-block' }}>
                   {selectedGuide.tier}
                 </span>
                 <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', color: 'var(--color-gold-bright)', margin: 0 }}>
@@ -262,7 +490,6 @@ export const RaidGuidesView: React.FC<RaidGuidesViewProps> = ({ initialZoneId })
                         className="btn"
                         style={{ fontSize: '0.72rem', padding: '0.2rem 0.5rem' }}
                         onClick={() => {
-                          // Try scrolling to matching heading
                           const headers = document.querySelectorAll('.raid-guide-content h2');
                           for (const h of Array.from(headers)) {
                             if (h.textContent?.toLowerCase().includes(cleanEnc.toLowerCase())) {
@@ -289,7 +516,6 @@ export const RaidGuidesView: React.FC<RaidGuidesViewProps> = ({ initialZoneId })
                 fontSize: '0.88rem'
               }}
               onClick={(e) => {
-                // Intercept clicks on PQDI links to open rich NpcModal
                 const target = (e.target as HTMLElement).closest('a');
                 if (target && target.href && target.href.includes('pqdi.cc/npc/')) {
                   const match = target.href.match(/pqdi\.cc\/npc\/(\d+)/);
