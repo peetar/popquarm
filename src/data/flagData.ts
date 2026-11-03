@@ -23,6 +23,7 @@ export const flagCategories: FlagCategory[] = [
         npc: 'Adler Fuirstel',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Disease',
         pqdiUrl: 'https://www.pqdi.cc/npc/203394',
+        raidGuideZoneId: 'podisease',
         parentFlagId: 'fuirstel',
         stepValue: 1,
         displayStepName: 'Fuirstel Step 1'
@@ -36,6 +37,8 @@ export const flagCategories: FlagCategory[] = [
         npc: 'Grummus',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Disease',
         pqdiUrl: 'https://www.pqdi.cc/npc/205091',
+        raidGuideZoneId: 'podisease',
+        npcId: '205091',
         parentFlagId: 'fuirstel',
         stepValue: 2,
         displayStepName: 'Fuirstel Step 2'
@@ -48,6 +51,8 @@ export const flagCategories: FlagCategory[] = [
         zone: 'Plane of Disease',
         npc: 'Planar Projection',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Disease',
+        raidGuideZoneId: 'podisease',
+        npcId: '205091',
         parentFlagId: 'grummus',
         stepValue: 1
       },
@@ -61,6 +66,7 @@ export const flagCategories: FlagCategory[] = [
         npc: 'Mavuin',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Justice',
         pqdiUrl: 'https://www.pqdi.cc/npc/201081',
+        raidGuideZoneId: 'pojustice',
         parentFlagId: 'mavuin',
         stepValue: 1
       },
@@ -72,6 +78,8 @@ export const flagCategories: FlagCategory[] = [
         zone: 'Plane of Justice',
         npc: 'The Tribunal',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Justice',
+        raidGuideZoneId: 'pojustice',
+        npcId: '201075',
         parentFlagId: 'mavuin',
         stepValue: 2
       },
@@ -84,6 +92,7 @@ export const flagCategories: FlagCategory[] = [
         npc: 'Mavuin',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Justice',
         pqdiUrl: 'https://www.pqdi.cc/npc/201081',
+        raidGuideZoneId: 'pojustice',
         parentFlagId: 'mavuin',
         stepValue: 3
       },
@@ -97,6 +106,8 @@ export const flagCategories: FlagCategory[] = [
         npc: 'Xanamech Nezmirthafen',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Innovation',
         pqdiUrl: 'https://www.pqdi.cc/npc/206208',
+        raidGuideZoneId: 'poinnovation',
+        npcId: '206208',
         parentFlagId: 'poi_door',
         stepValue: 1
       },
@@ -109,6 +120,7 @@ export const flagCategories: FlagCategory[] = [
         npc: 'Giwin Mirakon',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Innovation',
         pqdiUrl: 'https://www.pqdi.cc/npc/206038',
+        raidGuideZoneId: 'poinnovation',
         parentFlagId: 'zeks',
         stepValue: 1
       },
@@ -121,6 +133,8 @@ export const flagCategories: FlagCategory[] = [
         npc: 'Manaetic Behemoth',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Innovation',
         pqdiUrl: 'https://www.pqdi.cc/npc/206046',
+        raidGuideZoneId: 'poinnovation',
+        npcId: '206046',
         parentFlagId: 'zeks',
         stepValue: 2
       },
@@ -134,6 +148,7 @@ export const flagCategories: FlagCategory[] = [
         npc: 'Adroha Jezith',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Nightmare',
         pqdiUrl: 'https://www.pqdi.cc/npc/203366',
+        raidGuideZoneId: 'ponightmare',
         parentFlagId: 'thelin',
         stepValue: 1
       },
@@ -146,6 +161,8 @@ export const flagCategories: FlagCategory[] = [
         npc: 'Thelin Poxbourne',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Nightmare',
         pqdiUrl: 'https://www.pqdi.cc/npc/204486',
+        raidGuideZoneId: 'ponightmare',
+        npcId: '204486',
         parentFlagId: 'thelin',
         stepValue: 2
       },
@@ -158,6 +175,8 @@ export const flagCategories: FlagCategory[] = [
         npc: 'Terris Thule',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Nightmare',
         pqdiUrl: 'https://www.pqdi.cc/npc/221041',
+        raidGuideZoneId: 'nightmareb',
+        npcId: '221041',
         parentFlagId: 'thelin',
         stepValue: 3
       },
@@ -170,6 +189,7 @@ export const flagCategories: FlagCategory[] = [
         npc: 'Elder Poxbourne',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Nightmare',
         pqdiUrl: 'https://www.pqdi.cc/npc/203374',
+        raidGuideZoneId: 'nightmareb',
         parentFlagId: 'thelin',
         stepValue: 4
       }
@@ -190,6 +210,7 @@ export const flagCategories: FlagCategory[] = [
         npc: 'Elder Fuirstel',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Crypt_of_Decay',
         pqdiUrl: 'https://www.pqdi.cc/npc/203375',
+        raidGuideZoneId: 'codecay',
         parentFlagId: 'fuirstel',
         stepValue: 3
       },
@@ -202,6 +223,8 @@ export const flagCategories: FlagCategory[] = [
         npc: 'Tarkil Adan',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Crypt_of_Decay',
         pqdiUrl: 'https://www.pqdi.cc/npc/200232',
+        raidGuideZoneId: 'codecay',
+        npcId: '200232',
         parentFlagId: 'bertox_key',
         stepValue: 1
       },
@@ -214,6 +237,8 @@ export const flagCategories: FlagCategory[] = [
         npc: 'Bertoxxulous',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Crypt_of_Decay',
         pqdiUrl: 'https://www.pqdi.cc/npc/200226',
+        raidGuideZoneId: 'codecay',
+        npcId: '200226',
         parentFlagId: 'fuirstel',
         stepValue: 4
       },
@@ -226,6 +251,7 @@ export const flagCategories: FlagCategory[] = [
         npc: 'Elder Fuirstel',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Crypt_of_Decay',
         pqdiUrl: 'https://www.pqdi.cc/npc/203375',
+        raidGuideZoneId: 'codecay',
         parentFlagId: 'fuirstel',
         stepValue: 5
       },
@@ -239,6 +265,7 @@ export const flagCategories: FlagCategory[] = [
         npc: 'Fahlia Shadyglade',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Torment',
         pqdiUrl: 'https://www.pqdi.cc/npc/203372',
+        raidGuideZoneId: 'potorment',
         parentFlagId: 'tylis',
         stepValue: 1
       },
@@ -251,6 +278,8 @@ export const flagCategories: FlagCategory[] = [
         npc: 'Tylis Newleaf',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Torment',
         pqdiUrl: 'https://www.pqdi.cc/npc/203373',
+        raidGuideZoneId: 'potorment',
+        npcId: '203373',
         parentFlagId: 'tylis',
         stepValue: 2
       },
@@ -262,6 +291,7 @@ export const flagCategories: FlagCategory[] = [
         zone: 'Plane of Tranquility',
         npc: 'Tylis Newleaf',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Torment',
+        raidGuideZoneId: 'potorment',
         parentFlagId: 'tylis',
         stepValue: 3
       },
@@ -274,6 +304,8 @@ export const flagCategories: FlagCategory[] = [
         npc: 'Saryrn',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Torment',
         pqdiUrl: 'https://www.pqdi.cc/npc/207001',
+        raidGuideZoneId: 'potorment',
+        npcId: '207001',
         parentFlagId: 'saryrn',
         stepValue: 1
       },
@@ -287,6 +319,8 @@ export const flagCategories: FlagCategory[] = [
         npc: 'Askr the Lost',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Bastion_of_Thunder',
         pqdiUrl: 'https://www.pqdi.cc/npc/210062',
+        raidGuideZoneId: 'postorms',
+        npcId: '210062',
         parentFlagId: 'karana',
         stepValue: 1
       },
@@ -298,6 +332,8 @@ export const flagCategories: FlagCategory[] = [
         zone: 'Plane of Storms',
         npc: 'Askr the Lost',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Bastion_of_Thunder',
+        raidGuideZoneId: 'postorms',
+        npcId: '210062',
         parentFlagId: 'karana',
         stepValue: 2 // values 2 and 3 represent having talisman/access
       },
@@ -311,6 +347,8 @@ export const flagCategories: FlagCategory[] = [
         npc: 'Aerin`Dar',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Halls_of_Honor_Access',
         pqdiUrl: 'https://www.pqdi.cc/npc/208074',
+        raidGuideZoneId: 'povalor',
+        npcId: '208074',
         parentFlagId: 'aerindar',
         stepValue: 1
       },
@@ -321,6 +359,8 @@ export const flagCategories: FlagCategory[] = [
         type: 'group',
         zone: 'Plane of Valor',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Halls_of_Honor_Access',
+        raidGuideZoneId: 'povalor',
+        npcId: '208074',
         parentFlagId: 'aerindar',
         stepValue: 2
       }
@@ -341,6 +381,8 @@ export const flagCategories: FlagCategory[] = [
         npc: 'Askr the Lost',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Bastion_of_Thunder',
         pqdiUrl: 'https://www.pqdi.cc/npc/209061',
+        raidGuideZoneId: 'bothunder',
+        npcId: '210062',
         parentFlagId: 'karana',
         stepValue: 3
       },
@@ -353,6 +395,8 @@ export const flagCategories: FlagCategory[] = [
         npc: 'Agnarr the Storm Lord',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Bastion_of_Thunder',
         pqdiUrl: 'https://www.pqdi.cc/npc/209026',
+        raidGuideZoneId: 'bothunder',
+        npcId: '209026',
         parentFlagId: 'karana',
         stepValue: 4
       },
@@ -365,6 +409,8 @@ export const flagCategories: FlagCategory[] = [
         zone: 'Halls of Honor',
         npc: 'Trydan Faye',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Halls_of_Honor_Trials',
+        raidGuideZoneId: 'hohonora',
+        npcId: '211106',
         parentFlagId: 'hohtrials',
         isSubFlag: true,
         bitPosition: 0
@@ -377,6 +423,8 @@ export const flagCategories: FlagCategory[] = [
         zone: 'Halls of Honor',
         npc: 'Rhaliq Trell',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Halls_of_Honor_Trials',
+        raidGuideZoneId: 'hohonora',
+        npcId: '211107',
         parentFlagId: 'hohtrials',
         isSubFlag: true,
         bitPosition: 1
@@ -389,6 +437,8 @@ export const flagCategories: FlagCategory[] = [
         zone: 'Halls of Honor',
         npc: 'Alekson Garn',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Halls_of_Honor_Trials',
+        raidGuideZoneId: 'hohonora',
+        npcId: '211108',
         parentFlagId: 'hohtrials',
         isSubFlag: true,
         bitPosition: 2
@@ -403,6 +453,8 @@ export const flagCategories: FlagCategory[] = [
         npc: 'Mithaniel Marr',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Mithaniel_Marr',
         pqdiUrl: 'https://www.pqdi.cc/npc/220020',
+        raidGuideZoneId: 'hohonorb',
+        npcId: '220020',
         parentFlagId: 'mmarr',
         stepValue: 1
       },
@@ -414,6 +466,8 @@ export const flagCategories: FlagCategory[] = [
         zone: 'Halls of Honor B',
         npc: 'Planar Projection',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Mithaniel_Marr',
+        raidGuideZoneId: 'hohonorb',
+        npcId: '220020',
         parentFlagId: 'mmarr_book',
         stepValue: 1
       },
@@ -427,6 +481,8 @@ export const flagCategories: FlagCategory[] = [
         npc: 'Vallon Zek',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#The_Zeks',
         pqdiUrl: 'https://www.pqdi.cc/npc/214316',
+        raidGuideZoneId: 'potactics',
+        npcId: '214316',
         parentFlagId: 'zeks',
         stepValue: 3
       },
@@ -439,6 +495,8 @@ export const flagCategories: FlagCategory[] = [
         npc: 'Tallon Zek',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#The_Zeks',
         pqdiUrl: 'https://www.pqdi.cc/npc/214026',
+        raidGuideZoneId: 'potactics',
+        npcId: '214026',
         parentFlagId: 'zeks',
         stepValue: 4
       },
@@ -449,6 +507,8 @@ export const flagCategories: FlagCategory[] = [
         type: 'raid',
         zone: 'Plane of Tactics',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#The_Zeks',
+        raidGuideZoneId: 'potactics',
+        npcId: '214026',
         parentFlagId: 'zeks',
         stepValue: 5
       },
@@ -460,6 +520,7 @@ export const flagCategories: FlagCategory[] = [
         zone: 'Plane of Knowledge',
         npc: 'Grand Librarian Maelin',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#The_Zeks',
+        raidGuideZoneId: 'potactics',
         parentFlagId: 'zeks',
         stepValue: 6
       },
@@ -472,6 +533,8 @@ export const flagCategories: FlagCategory[] = [
         npc: 'Rallos Zek',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Rallos_Zek',
         pqdiUrl: 'https://www.pqdi.cc/npc/214052',
+        raidGuideZoneId: 'potactics',
+        npcId: '214052',
         parentFlagId: 'zeks',
         stepValue: 7
       }
@@ -490,6 +553,7 @@ export const flagCategories: FlagCategory[] = [
         zone: 'Plane of Knowledge',
         npc: 'Grand Librarian Maelin',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Maelin_and_Seer_Clean_Up_Guides',
+        raidGuideZoneId: 'solrotower',
         parentFlagId: 'cipher',
         stepValue: 1
       },
@@ -530,6 +594,7 @@ export const flagCategories: FlagCategory[] = [
         zone: 'Plane of Tranquility',
         npc: 'Miak the Light Bearer',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Solusek_Ro.27s_Tower',
+        raidGuideZoneId: 'solrotower',
         parentFlagId: 'pofire',
         stepValue: 1
       },
@@ -541,6 +606,8 @@ export const flagCategories: FlagCategory[] = [
         zone: 'Solusek Ro\'s Tower',
         npc: 'Xuzl',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Solusek_Ro.27s_Tower',
+        raidGuideZoneId: 'solrotower',
+        npcId: '212041',
         parentFlagId: 'sol_room',
         isSubFlag: true,
         bitPosition: 0
@@ -553,6 +620,8 @@ export const flagCategories: FlagCategory[] = [
         zone: 'Solusek Ro\'s Tower',
         npc: 'Arlyxir',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Solusek_Ro.27s_Tower',
+        raidGuideZoneId: 'solrotower',
+        npcId: '212042',
         parentFlagId: 'sol_room',
         isSubFlag: true,
         bitPosition: 1
@@ -565,6 +634,8 @@ export const flagCategories: FlagCategory[] = [
         zone: 'Solusek Ro\'s Tower',
         npc: 'Protector of Dresolik',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Solusek_Ro.27s_Tower',
+        raidGuideZoneId: 'solrotower',
+        npcId: '212043',
         parentFlagId: 'sol_room',
         isSubFlag: true,
         bitPosition: 2
@@ -577,6 +648,8 @@ export const flagCategories: FlagCategory[] = [
         zone: 'Solusek Ro\'s Tower',
         npc: 'Rizlona',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Solusek_Ro.27s_Tower',
+        raidGuideZoneId: 'solrotower',
+        npcId: '212044',
         parentFlagId: 'sol_room',
         isSubFlag: true,
         bitPosition: 3
@@ -589,6 +662,8 @@ export const flagCategories: FlagCategory[] = [
         zone: 'Solusek Ro\'s Tower',
         npc: 'Jiva',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Solusek_Ro.27s_Tower',
+        raidGuideZoneId: 'solrotower',
+        npcId: '212045',
         parentFlagId: 'sol_room',
         isSubFlag: true,
         bitPosition: 4
@@ -602,6 +677,8 @@ export const flagCategories: FlagCategory[] = [
         npc: 'Solusek Ro',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Solusek_Ro.27s_Tower',
         pqdiUrl: 'https://www.pqdi.cc/npc/212025',
+        raidGuideZoneId: 'solrotower',
+        npcId: '212025',
         parentFlagId: 'pofire',
         stepValue: 2
       }
@@ -621,6 +698,8 @@ export const flagCategories: FlagCategory[] = [
         npc: 'Fennin Ro the Tyrant of Fire',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Fire',
         pqdiUrl: 'https://www.pqdi.cc/npc/217440',
+        raidGuideZoneId: 'pofire',
+        npcId: '217440',
       },
       {
         id: 'wind_etched_key',
@@ -628,7 +707,8 @@ export const flagCategories: FlagCategory[] = [
         description: 'Optional – Obtain Wind Etched Key to zone up to Xegony Island. (1 person per group will need the key).',
         type: 'optional',
         zone: 'Plane of Air',
-        wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Air'
+        wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Air',
+        raidGuideZoneId: 'poair',
       },
       {
         id: 'essence_air',
@@ -639,6 +719,8 @@ export const flagCategories: FlagCategory[] = [
         npc: 'Xegony the Queen of Air',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Air',
         pqdiUrl: 'https://www.pqdi.cc/npc/215056',
+        raidGuideZoneId: 'poair',
+        npcId: '215056',
       },
       {
         id: 'essence_water',
@@ -649,6 +731,8 @@ export const flagCategories: FlagCategory[] = [
         npc: 'Coirnav the Avatar of Water',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Water',
         pqdiUrl: 'https://www.pqdi.cc/npc/216048',
+        raidGuideZoneId: 'powater',
+        npcId: '216048',
       },
       {
         id: 'gem_etched_key',
@@ -656,7 +740,8 @@ export const flagCategories: FlagCategory[] = [
         description: 'Optional – Kill Tantisala Jaggedtooth in Plane of Earth A. Loot Gem-Etched Key.',
         type: 'optional',
         zone: 'Plane of Earth A',
-        wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Earth'
+        wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Earth',
+        raidGuideZoneId: 'poeartha',
       },
       {
         id: 'essence_earth_arbiter',
@@ -667,6 +752,8 @@ export const flagCategories: FlagCategory[] = [
         npc: 'A Mystical Arbitor of Earth',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Earth',
         pqdiUrl: 'https://www.pqdi.cc/npc/218375',
+        raidGuideZoneId: 'poeartha',
+        npcId: '218375',
         parentFlagId: 'earthb_key',
         stepValue: 1
       },
@@ -679,6 +766,8 @@ export const flagCategories: FlagCategory[] = [
         npc: 'The Rathe Council',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Earth',
         pqdiUrl: 'https://www.pqdi.cc/npc/222003',
+        raidGuideZoneId: 'poearthb',
+        npcId: '222003',
       }
     ]
   },
@@ -693,7 +782,8 @@ export const flagCategories: FlagCategory[] = [
         description: 'Combine Globe of Dancing Flame, Amorphous Cloud of Air, Sphere of Coalesced Water, and Mound of Living Stone inside an Odylic Vial to create the Quintessence of Elements.',
         type: 'raid',
         zone: 'Plane of Knowledge',
-        wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Time_Access'
+        wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Time_Access',
+        raidGuideZoneId: 'potimea',
       },
       {
         id: 'time_portal_active',
@@ -703,6 +793,8 @@ export const flagCategories: FlagCategory[] = [
         zone: 'Plane of Innovation',
         npc: 'Loreseeker Maelin',
         wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Time_Access',
+        raidGuideZoneId: 'potimeb',
+        npcId: '223000',
         parentFlagId: 'time',
         stepValue: 1
       }

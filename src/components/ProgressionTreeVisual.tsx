@@ -5,6 +5,8 @@ import type { FlagDefinition } from '../types';
 interface ProgressionTreeVisualProps {
   characterFlags: Record<string, string>;
   onFlagToggle: (flag: FlagDefinition, isChecked: boolean) => void;
+  onOpenRaidGuide?: (zoneId: string) => void;
+  onOpenNpc?: (npcId: string | number) => void;
 }
 
 // Flat list of all flags for lookup
@@ -19,6 +21,8 @@ interface VisualNode {
   y: number; // absolute coordinates inside 1780px canvas
   wikiUrl?: string;
   pqdiUrl?: string;
+  raidGuideZoneId?: string;
+  npcId?: string | number;
   flags: {
     id: string;
     shortLabel: string;
@@ -74,6 +78,7 @@ const nodes: VisualNode[] = [
     x: 150, y: 110,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Disease',
     pqdiUrl: 'https://www.pqdi.cc/npc/203394',
+    raidGuideZoneId: 'podisease',
     flags: [
       { id: 'fuirstel_1', shortLabel: 'Hail', fullName: 'Speak to Adler Fuirstel' }
     ]
@@ -86,6 +91,8 @@ const nodes: VisualNode[] = [
     x: 150, y: 210,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Disease',
     pqdiUrl: 'https://www.pqdi.cc/npc/205091',
+    raidGuideZoneId: 'podisease',
+    npcId: '205091',
     flags: [
       { id: 'fuirstel_2', shortLabel: 'Kill', fullName: 'Grummus Projection Hailed' }
     ]
@@ -98,6 +105,7 @@ const nodes: VisualNode[] = [
     x: 400, y: 110,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Justice',
     pqdiUrl: 'https://www.pqdi.cc/npc/201081',
+    raidGuideZoneId: 'pojustice',
     flags: [
       { id: 'mavuin_1', shortLabel: 'Hail', fullName: 'Mavuin cell spoken to' }
     ]
@@ -110,6 +118,8 @@ const nodes: VisualNode[] = [
     x: 400, y: 210,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Justice',
     pqdiUrl: 'https://www.pqdi.cc/npc/201075',
+    raidGuideZoneId: 'pojustice',
+    npcId: '201075',
     flags: [
       { id: 'mavuin_2', shortLabel: 'Trial', fullName: 'Speak to Tribunal in Trial' },
       { id: 'mavuin_3', shortLabel: 'Return', fullName: 'Return to Mavuin in Cells' }
@@ -123,6 +133,7 @@ const nodes: VisualNode[] = [
     x: 650, y: 100,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Innovation',
     pqdiUrl: 'https://www.pqdi.cc/npc/206038',
+    raidGuideZoneId: 'poinnovation',
     flags: [
       { id: 'zeks_1', shortLabel: 'Hail', fullName: 'Giwin in Innovation Factory' }
     ]
@@ -135,6 +146,8 @@ const nodes: VisualNode[] = [
     x: 650, y: 190,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Innovation',
     pqdiUrl: 'https://www.pqdi.cc/npc/206208',
+    raidGuideZoneId: 'poinnovation',
+    npcId: '206208',
     flags: [] // Optional key, no flag checkbox
   },
   {
@@ -145,6 +158,8 @@ const nodes: VisualNode[] = [
     x: 650, y: 280,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Innovation',
     pqdiUrl: 'https://www.pqdi.cc/npc/206046',
+    raidGuideZoneId: 'poinnovation',
+    npcId: '206046',
     flags: [
       { id: 'zeks_2', shortLabel: 'Kill', fullName: 'Manaetic Behemoth Slain' }
     ]
@@ -157,6 +172,7 @@ const nodes: VisualNode[] = [
     x: 915, y: 100,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Nightmare',
     pqdiUrl: 'https://www.pqdi.cc/npc/203366',
+    raidGuideZoneId: 'ponightmare',
     flags: [
       { id: 'thelin_1', shortLabel: 'Hail', fullName: 'Adroha spoken to' }
     ]
@@ -169,6 +185,8 @@ const nodes: VisualNode[] = [
     x: 915, y: 190,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Nightmare',
     pqdiUrl: 'https://www.pqdi.cc/npc/204486',
+    raidGuideZoneId: 'ponightmare',
+    npcId: '204486',
     flags: [
       { id: 'thelin_2', shortLabel: 'Hail Thelin', fullName: 'Complete Hedge Maze & Hail Thelin' }
     ]
@@ -181,6 +199,8 @@ const nodes: VisualNode[] = [
     x: 915, y: 280,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Nightmare',
     pqdiUrl: 'https://www.pqdi.cc/npc/221041',
+    raidGuideZoneId: 'nightmareb',
+    npcId: '221041',
     flags: [
       { id: 'thelin_3', shortLabel: 'Kill', fullName: 'Terris Thule Defeated' },
       { id: 'thelin_4', shortLabel: 'Return', fullName: 'Return to Elder Poxbourne' }
@@ -196,6 +216,7 @@ const nodes: VisualNode[] = [
     x: 150, y: 460,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Crypt_of_Decay',
     pqdiUrl: 'https://www.pqdi.cc/npc/203375',
+    raidGuideZoneId: 'codecay',
     flags: [
       { id: 'fuirstel_3', shortLabel: 'Hail', fullName: 'Hail Elder Fuirstel' }
     ]
@@ -208,6 +229,8 @@ const nodes: VisualNode[] = [
     x: 150, y: 550,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Crypt_of_Decay',
     pqdiUrl: 'https://www.pqdi.cc/npc/200232',
+    raidGuideZoneId: 'codecay',
+    npcId: '200232',
     flags: [
       { id: 'bertox_key_access', shortLabel: 'Carprin', fullName: 'Complete Carprin & Hail Tarkil' }
     ]
@@ -220,6 +243,8 @@ const nodes: VisualNode[] = [
     x: 150, y: 640,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Crypt_of_Decay',
     pqdiUrl: 'https://www.pqdi.cc/npc/200226',
+    raidGuideZoneId: 'codecay',
+    npcId: '200226',
     flags: [
       { id: 'fuirstel_4', shortLabel: 'Kill', fullName: 'Bertoxxulous Slain' },
       { id: 'fuirstel_5', shortLabel: 'Return', fullName: 'Elder Fuirstel final hail' }
@@ -233,6 +258,8 @@ const nodes: VisualNode[] = [
     x: 400, y: 560,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Storms',
     pqdiUrl: 'https://www.pqdi.cc/npc/210062',
+    raidGuideZoneId: 'postorms',
+    npcId: '210062',
     flags: [
       { id: 'karana_1', shortLabel: 'Heads', fullName: 'Storms: Speak to Askr' },
       { id: 'karana_2', shortLabel: 'Key', fullName: 'Storms: BoT Access Key' }
@@ -245,6 +272,7 @@ const nodes: VisualNode[] = [
     type: 'optional',
     x: 650, y: 460,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Valor',
+    raidGuideZoneId: 'povalor',
     flags: [] // Optional key, no checkbox
   },
   {
@@ -255,6 +283,8 @@ const nodes: VisualNode[] = [
     x: 650, y: 550,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Valor',
     pqdiUrl: 'https://www.pqdi.cc/npc/208074',
+    raidGuideZoneId: 'povalor',
+    npcId: '208074',
     flags: [
       { id: 'aerindar_kill', shortLabel: 'Kill', fullName: 'Defeat Aerin\'Dar' },
       { id: 'aerindar_zone', shortLabel: 'HoH', fullName: 'Zone into Halls of Honor' }
@@ -269,6 +299,7 @@ const nodes: VisualNode[] = [
     type: 'optional',
     x: 150, y: 810,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Bastion_of_Thunder',
+    raidGuideZoneId: 'bothunder',
     flags: [] // Optional key, no checkbox
   },
   {
@@ -279,6 +310,8 @@ const nodes: VisualNode[] = [
     x: 150, y: 910,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Bastion_of_Thunder',
     pqdiUrl: 'https://www.pqdi.cc/npc/209026',
+    raidGuideZoneId: 'bothunder',
+    npcId: '209026',
     flags: [
       { id: 'karana_3', shortLabel: 'Askr', fullName: 'Hail Askr in BoT' },
       { id: 'karana_4', shortLabel: 'Karana', fullName: 'Defeat Agnarr & Hail Karana' }
@@ -292,6 +325,8 @@ const nodes: VisualNode[] = [
     x: 400, y: 810,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Halls_of_Honor',
     pqdiUrl: 'https://www.pqdi.cc/npc/211106',
+    raidGuideZoneId: 'hohonora',
+    npcId: '211106',
     flags: [
       { id: 'hohtrials_1', shortLabel: 'Trial 1', fullName: 'Rydda`Dar (Northeast)' },
       { id: 'hohtrials_2', shortLabel: 'Trial 2', fullName: 'Save Villagers (Northwest)' },
@@ -306,6 +341,8 @@ const nodes: VisualNode[] = [
     x: 400, y: 910,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Halls_of_Honor',
     pqdiUrl: 'https://www.pqdi.cc/npc/220020',
+    raidGuideZoneId: 'hohonorb',
+    npcId: '220020',
     flags: [
       { id: 'mmarr_kill', shortLabel: 'Kill', fullName: 'Defeat Mithaniel Marr & Hail Projection' }
     ]
@@ -318,6 +355,7 @@ const nodes: VisualNode[] = [
     x: 915, y: 460,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Torment',
     pqdiUrl: 'https://www.pqdi.cc/npc/203372',
+    raidGuideZoneId: 'potorment',
     flags: [
       { id: 'tylis_1', shortLabel: 'Hail', fullName: 'Speak to Fahlia' }
     ]
@@ -329,6 +367,7 @@ const nodes: VisualNode[] = [
     type: 'optional',
     x: 915, y: 540,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Torment',
+    raidGuideZoneId: 'potorment',
     flags: [] // Optional key, no checkbox
   },
   {
@@ -339,6 +378,8 @@ const nodes: VisualNode[] = [
     x: 915, y: 620,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Torment',
     pqdiUrl: 'https://www.pqdi.cc/npc/203373',
+    raidGuideZoneId: 'potorment',
+    npcId: '203373',
     flags: [
       { id: 'tylis_2', shortLabel: 'Hail Tylis', fullName: 'Rescue & Hail Tylis' },
       { id: 'tylis_3', shortLabel: 'Sick Bay', fullName: 'Go to PoT Sick Bay and Hail Fahlia & Tylis' }
@@ -352,6 +393,8 @@ const nodes: VisualNode[] = [
     x: 915, y: 700,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Torment',
     pqdiUrl: 'https://www.pqdi.cc/npc/207001',
+    raidGuideZoneId: 'potorment',
+    npcId: '207001',
     flags: [
       { id: 'saryrn_kill', shortLabel: 'Kill', fullName: 'Defeat Saryrn' }
     ]
@@ -364,6 +407,8 @@ const nodes: VisualNode[] = [
     x: 915, y: 810,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Tactics',
     pqdiUrl: 'https://www.pqdi.cc/npc/214026',
+    raidGuideZoneId: 'potactics',
+    npcId: '214026',
     flags: [
       { id: 'zeks_3', shortLabel: 'Vallon', fullName: 'Defeat Vallon Zek' },
       { id: 'zeks_4', shortLabel: 'Tallon', fullName: 'Defeat Tallon Zek' },
@@ -378,6 +423,8 @@ const nodes: VisualNode[] = [
     x: 915, y: 910,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Tactics',
     pqdiUrl: 'https://www.pqdi.cc/npc/214052',
+    raidGuideZoneId: 'potactics',
+    npcId: '214052',
     flags: [
       { id: 'zeks_7', shortLabel: 'Kill', fullName: 'Defeat Rallos Zek' }
     ]
@@ -391,6 +438,7 @@ const nodes: VisualNode[] = [
     type: 'group',
     x: 200, y: 1200,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Solusek_Ro%27s_Tower',
+    raidGuideZoneId: 'solrotower',
     flags: [
       { id: 'cipher_unlocked', shortLabel: 'Cipher', fullName: 'Cipher of Divine Language' },
       { id: 'pofire_1', shortLabel: 'Portal', fullName: 'Portal altered (Miak)' }
@@ -403,6 +451,8 @@ const nodes: VisualNode[] = [
     type: 'raid',
     x: 540, y: 1200,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Solusek_Ro%27s_Tower',
+    raidGuideZoneId: 'solrotower',
+    npcId: '212041',
     flags: [
       { id: 'sol_room_1', shortLabel: 'Xuzl', fullName: 'Xuzl Defeated (Wing 1)' },
       { id: 'sol_room_2', shortLabel: 'Arly', fullName: 'Arlyxir Defeated (Wing 2)' },
@@ -419,6 +469,8 @@ const nodes: VisualNode[] = [
     x: 880, y: 1200,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Solusek_Ro%27s_Tower',
     pqdiUrl: 'https://www.pqdi.cc/npc/212025',
+    raidGuideZoneId: 'solrotower',
+    npcId: '212025',
     flags: [
       { id: 'solusek_kill', shortLabel: 'Kill', fullName: 'Defeat Solusek Ro' }
     ]
@@ -446,6 +498,8 @@ const nodes: VisualNode[] = [
     x: 160, y: 1540,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Fire',
     pqdiUrl: 'https://www.pqdi.cc/npc/217440',
+    raidGuideZoneId: 'pofire',
+    npcId: '217440',
     flags: [
       { id: 'essence_fire', shortLabel: 'Kill', fullName: 'Defeat Fennin Ro' }
     ]
@@ -457,6 +511,7 @@ const nodes: VisualNode[] = [
     type: 'optional',
     x: 410, y: 1490,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Air',
+    raidGuideZoneId: 'poair',
     flags: []
   },
   {
@@ -467,6 +522,8 @@ const nodes: VisualNode[] = [
     x: 410, y: 1585,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Air',
     pqdiUrl: 'https://www.pqdi.cc/npc/215056',
+    raidGuideZoneId: 'poair',
+    npcId: '215056',
     flags: [
       { id: 'essence_air', shortLabel: 'Kill', fullName: 'Defeat Xegony' }
     ]
@@ -479,6 +536,8 @@ const nodes: VisualNode[] = [
     x: 670, y: 1540,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Water',
     pqdiUrl: 'https://www.pqdi.cc/npc/216048',
+    raidGuideZoneId: 'powater',
+    npcId: '216048',
     flags: [
       { id: 'essence_water', shortLabel: 'Kill', fullName: 'Defeat Coirnav' }
     ]
@@ -490,6 +549,7 @@ const nodes: VisualNode[] = [
     type: 'optional',
     x: 920, y: 1480,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Earth',
+    raidGuideZoneId: 'poeartha',
     flags: []
   },
   {
@@ -500,6 +560,8 @@ const nodes: VisualNode[] = [
     x: 920, y: 1550,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Earth',
     pqdiUrl: 'https://www.pqdi.cc/npc/218375',
+    raidGuideZoneId: 'poeartha',
+    npcId: '218375',
     flags: [
       { id: 'essence_earth_arbiter', shortLabel: 'Arbiter', fullName: 'Complete Ring Events & Kill Arbiter' }
     ]
@@ -512,6 +574,8 @@ const nodes: VisualNode[] = [
     x: 920, y: 1620,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Earth',
     pqdiUrl: 'https://www.pqdi.cc/npc/222003',
+    raidGuideZoneId: 'poearthb',
+    npcId: '222003',
     flags: [
       { id: 'essence_earth_rathe', shortLabel: 'Rathe', fullName: 'Defeat The Rathe Council' }
     ]
@@ -525,6 +589,8 @@ const nodes: VisualNode[] = [
     type: 'raid',
     x: 540, y: 1740,
     wikiUrl: 'https://wiki.takp.info/wiki/Planes_of_Power_progression#Plane_of_Time',
+    raidGuideZoneId: 'potimeb',
+    npcId: '223000',
     flags: [
       { id: 'time_portal_active', shortLabel: 'Attuned', fullName: 'Plane of Time Portal Attuned' }
     ]
@@ -610,7 +676,9 @@ const connections = [
 
 export const ProgressionTreeVisual: React.FC<ProgressionTreeVisualProps> = ({
   characterFlags,
-  onFlagToggle
+  onFlagToggle,
+  onOpenRaidGuide,
+  onOpenNpc
 }) => {
   const [activePopupNodeId, setActivePopupNodeId] = useState<string | null>(null);
 
@@ -946,6 +1014,34 @@ export const ProgressionTreeVisual: React.FC<ProgressionTreeVisualProps> = ({
                       </div>
                       <p style={{ color: 'var(--color-text-muted)' }}>{node.desc}</p>
                       
+                      {(node.raidGuideZoneId || node.pqdiUrl) && (
+                        <div style={{ marginTop: '0.6rem', paddingTop: '0.5rem', borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
+                          {node.raidGuideZoneId && onOpenRaidGuide && (
+                            <button
+                              className="btn btn-group"
+                              style={{ fontSize: '0.68rem', padding: '0.2rem 0.5rem' }}
+                              onClick={() => {
+                                setActivePopupNodeId(null);
+                                onOpenRaidGuide(node.raidGuideZoneId!);
+                              }}
+                            >
+                              📖 View Raid Guide
+                            </button>
+                          )}
+                          {node.npcId && onOpenNpc && (
+                            <button
+                              className="btn"
+                              style={{ fontSize: '0.68rem', padding: '0.2rem 0.5rem' }}
+                              onClick={() => {
+                                onOpenNpc(node.npcId!);
+                              }}
+                            >
+                              ⚔️ Mob Combat Stats
+                            </button>
+                          )}
+                        </div>
+                      )}
+
                       {/* Tail arrow pointing to node name */}
                       <div style={tail} />
                       <div style={tailBg} />
@@ -977,7 +1073,29 @@ export const ProgressionTreeVisual: React.FC<ProgressionTreeVisualProps> = ({
                   </span>
                   
                   {/* Small Action Icons */}
-                  <div style={{ display: 'flex', gap: '0.2rem' }}>
+                  <div style={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
+                    {node.raidGuideZoneId && onOpenRaidGuide && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onOpenRaidGuide(node.raidGuideZoneId!);
+                        }}
+                        title="View Raid Encounter Guide"
+                        style={{
+                          background: 'none',
+                          border: 'none',
+                          padding: 0,
+                          cursor: 'pointer',
+                          color: '#34d399',
+                          display: 'inline-flex',
+                          alignItems: 'center'
+                        }}
+                      >
+                        <svg style={{ width: '0.8rem', height: '0.8rem', fill: 'currentColor' }} viewBox="0 0 24 24">
+                          <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+                        </svg>
+                      </button>
+                    )}
                     {node.wikiUrl && (
                       <a href={node.wikiUrl} target="_blank" rel="noopener noreferrer" title="Wiki Guide" style={{ color: 'var(--color-gold)', display: 'inline-flex' }}>
                         <svg style={{ width: '0.75rem', height: '0.75rem', fill: 'currentColor' }} viewBox="0 0 24 24">
@@ -986,7 +1104,20 @@ export const ProgressionTreeVisual: React.FC<ProgressionTreeVisualProps> = ({
                       </a>
                     )}
                     {node.pqdiUrl && (
-                      <a href={node.pqdiUrl} target="_blank" rel="noopener noreferrer" title="PQDI NPC Info" style={{ color: '#ab9b83', display: 'inline-flex' }}>
+                      <a 
+                        href={node.pqdiUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        title="PQDI Mob Combat Stats" 
+                        style={{ color: '#ab9b83', display: 'inline-flex' }}
+                        onClick={(e) => {
+                          if (node.npcId && onOpenNpc) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            onOpenNpc(node.npcId);
+                          }
+                        }}
+                      >
                         <svg style={{ width: '0.75rem', height: '0.75rem', fill: 'currentColor' }} viewBox="0 0 24 24">
                           <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2z"/>
                         </svg>

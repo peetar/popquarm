@@ -66,6 +66,12 @@ export const Header: React.FC<HeaderProps> = ({
           Live Log Parser
         </button>
         <button
+          className={`tab-btn ${currentTab === 'raids' ? 'active' : ''}`}
+          onClick={() => setCurrentTab('raids')}
+        >
+          Raid Guides
+        </button>
+        <button
           className={`tab-btn ${currentTab === 'import' ? 'active' : ''}`}
           onClick={() => setCurrentTab('import')}
         >

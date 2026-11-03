@@ -6,7 +6,10 @@ import ProgressionTreeVisual from './components/ProgressionTreeVisual';
 import LogParser from './components/LogParser';
 import ImportExport from './components/ImportExport';
 import SeerChecklist from './components/SeerChecklist';
-import type { Character, ClassName, FlagDefinition } from './types';
+import { RaidGuidesView } from './components/RaidGuidesView';
+import { NpcModal } from './components/NpcModal';
+import { getNpcData } from './utils/npcData';
+import type { Character, ClassName, FlagDefinition, NpcRawData } from './types';
 import './App.css';
 
 function App() {
@@ -14,6 +17,8 @@ function App() {
   const [activeCharacterId, setActiveCharacterId] = useState<string | null>(null);
   const [currentTab, setCurrentTab] = useState<string>('checklist');
   const [viewMode, setViewMode] = useState<'tree' | 'list'>('tree');
+  const [raidGuideZoneId, setRaidGuideZoneId] = useState<string | null>(null);
+  const [popupNpc, setPopupNpc] = useState<NpcRawData | null>(null);
 
   // Load from local storage on mount
   useEffect(() => {
@@ -282,11 +287,29 @@ function App() {
                   <ProgressionTreeVisual
                     characterFlags={activeCharacter?.flags || {}}
                     onFlagToggle={handleFlagToggle}
+                    onOpenRaidGuide={(zoneId) => {
+                      setRaidGuideZoneId(zoneId);
+                      setCurrentTab('raids');
+                    }}
+                    onOpenNpc={(nid) => {
+                      const data = getNpcData(nid);
+                      if (data) setPopupNpc(data);
+                      else window.open(`https://www.pqdi.cc/npc/${nid}`, '_blank');
+                    }}
                   />
                 ) : (
                   <ProgressionTree
                     characterFlags={activeCharacter?.flags || {}}
                     onFlagToggle={handleFlagToggle}
+                    onOpenRaidGuide={(zoneId) => {
+                      setRaidGuideZoneId(zoneId);
+                      setCurrentTab('raids');
+                    }}
+                    onOpenNpc={(nid) => {
+                      const data = getNpcData(nid);
+                      if (data) setPopupNpc(data);
+                      else window.open(`https://www.pqdi.cc/npc/${nid}`, '_blank');
+                    }}
                   />
                 )}
               </div>
@@ -303,6 +326,13 @@ function App() {
               />
             )}
 
+            {currentTab === 'raids' && (
+              <RaidGuidesView
+                initialZoneId={raidGuideZoneId}
+                onSelectZone={(zid) => setRaidGuideZoneId(zid)}
+              />
+            )}
+
             {currentTab === 'import' && (
               <ImportExport
                 activeCharacter={activeCharacter}
@@ -313,6 +343,12 @@ function App() {
           </>
         )}
       </main>
+
+      {/* Global Mob NPC Modal */}
+      <NpcModal
+        npc={popupNpc}
+        onClose={() => setPopupNpc(null)}
+      />
 
       <footer style={{ marginTop: '3rem', borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingTop: '1.5rem', textAlign: 'center', fontSize: '0.8rem', color: 'var(--color-text-muted)', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
         <p>Created by zondro/peetar/thebrain. Issues can be reported on <a href="https://github.com/peetar/popquarm/issues" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color-gold-bright)', textDecoration: 'underline' }}>GitHub Issues</a>.</p>

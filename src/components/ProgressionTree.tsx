@@ -5,11 +5,15 @@ import type { FlagDefinition, FlagType } from '../types';
 interface ProgressionTreeProps {
   characterFlags: Record<string, string>;
   onFlagToggle: (flag: FlagDefinition, isChecked: boolean) => void;
+  onOpenRaidGuide?: (zoneId: string) => void;
+  onOpenNpc?: (npcId: string | number) => void;
 }
 
 export const ProgressionTree: React.FC<ProgressionTreeProps> = ({
   characterFlags,
-  onFlagToggle
+  onFlagToggle,
+  onOpenRaidGuide,
+  onOpenNpc
 }) => {
   // Helper to determine if a specific flag/step is active in the character's record
   const isFlagChecked = (flag: FlagDefinition): boolean => {
@@ -98,6 +102,19 @@ export const ProgressionTree: React.FC<ProgressionTreeProps> = ({
                       <p className="flag-desc">{flag.description}</p>
                       
                       <div className="flag-links">
+                        {flag.raidGuideZoneId && onOpenRaidGuide && (
+                          <button
+                            type="button"
+                            className="flag-link"
+                            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, color: '#34d399' }}
+                            onClick={() => onOpenRaidGuide(flag.raidGuideZoneId!)}
+                          >
+                            <svg style={{ width: '0.9rem', height: '0.9rem', fill: 'currentColor' }} viewBox="0 0 24 24">
+                              <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+                            </svg>
+                            Raid Guide
+                          </button>
+                        )}
                         {flag.wikiUrl && (
                           <a
                             href={flag.wikiUrl}
@@ -118,6 +135,12 @@ export const ProgressionTree: React.FC<ProgressionTreeProps> = ({
                             rel="noopener noreferrer"
                             className="flag-link"
                             style={{ color: '#ab9b83' }}
+                            onClick={(e) => {
+                              if (flag.npcId && onOpenNpc) {
+                                e.preventDefault();
+                                onOpenNpc(flag.npcId);
+                              }
+                            }}
                           >
                             <svg style={{ width: '0.9rem', height: '0.9rem', fill: 'currentColor' }} viewBox="0 0 24 24">
                               <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2z"/>

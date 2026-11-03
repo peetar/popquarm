@@ -32,6 +32,8 @@ export interface FlagDefinition {
   parentFlagId?: string; // If this is a sub-flag, which character global holds it
   displayStepName?: string; // Human readable label for the specific step value
   stepValue?: number; // For step-based flags, the exact value this sub-item represents
+  raidGuideZoneId?: string; // Links to the raid guide for this zone
+  npcId?: string | number; // Direct PQDI NPC ID for instant popup stats
 }
 
 export interface Character {
@@ -58,3 +60,49 @@ export interface LogParseResult {
   unlockedFlagsCount: number;
   parsedLinesCount: number;
 }
+
+export interface RaidGuide {
+  id: string;
+  filename: string;
+  title: string;
+  zoneShortName: string;
+  zoneLongName: string;
+  tier: string;
+  tierNum: number;
+  encounters: string[];
+  rawMarkdown: string;
+}
+
+export interface NpcRawData {
+  id: string;
+  name: string;
+  lastname?: string;
+  level: string;
+  race: string;
+  class: string;
+  bodytype?: string;
+  hp: string;
+  mana?: string;
+  mindmg: string;
+  maxdmg: string;
+  attack_delay: string;
+  special_abilities?: string;
+  slow_mitigation?: string;
+  AC?: string;
+  MR?: string;
+  CR?: string;
+  DR?: string;
+  FR?: string;
+  PR?: string;
+  Accuracy?: string;
+  hp_regen_rate?: string;
+  combat_hp_regen?: string;
+  see_invis?: string;
+  see_invis_undead?: string;
+  see_sneak?: string;
+  see_improved_hide?: string;
+  long_name?: string;
+  zone?: string;
+  [key: string]: any;
+}
+
